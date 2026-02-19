@@ -1,25 +1,21 @@
-import 'react-native-reanimated';
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
 
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+// Keep the native splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  useEffect(() => {
+    // In a real app, you'd load fonts/data here
+    // For now, we'll just hide the native splash after the component mounts
+    SplashScreen.hideAsync();
+  }, []);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="index" />
+      {/* Add other screens here, e.g., (tabs) */}
+    </Stack>
   );
 }
