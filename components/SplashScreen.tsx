@@ -3,18 +3,21 @@ import React, { useEffect, useRef } from "react";
 import {
   Animated,
   Dimensions,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
   View,
+  useColorScheme,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Colors } from "../constants/Colors";
 
 const { width } = Dimensions.get("window");
 
 const SplashScreen = () => {
-  // Toggle this for dark mode testing
-  const isDarkMode = false;
+  // Use the system color scheme
+  const colorScheme = useColorScheme();
+  const isDarkMode = colorScheme === 'dark';
 
   const progress = useRef(new Animated.Value(0)).current;
 
@@ -31,13 +34,7 @@ const SplashScreen = () => {
     outputRange: ["0%", "100%"],
   });
 
-  const theme = {
-    background: isDarkMode ? "#122017" : "#FFFFFF",
-    text: isDarkMode ? "#FFFFFF" : "#121714",
-    textMuted: isDarkMode ? "#a1b5a9" : "#658671",
-    primary: "#4ade80",
-    progressBg: isDarkMode ? "rgba(74, 222, 128, 0.1)" : "#f0fdf4",
-  };
+  const theme = isDarkMode ? Colors.dark : Colors.light;
 
   return (
     <SafeAreaView
